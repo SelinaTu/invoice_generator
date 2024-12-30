@@ -1,0 +1,4 @@
+.env
+archive/
+deno.lock
+merge_files.ts

@@ -1,0 +1,239 @@
+<!-- Welcome State -->
+<div x-cloak
+     x-show="$store.workspace.isNewPage"
+     class="welcome-state inset-0 z-10 flex flex-col items-center justify-center min-h-screen"
+     x-transition:enter="transition ease-out duration-500"
+     x-transition:enter-start="opacity-0 transform translate-y-8"
+     x-transition:enter-end="opacity-100 transform translate-y-0"
+     x-transition:leave="transition ease-in duration-300"
+     x-transition:leave-start="opacity-100 transform translate-y-0"
+     x-transition:leave-end="opacity-0 transform -translate-y-8">
+  <div class="text-center space-y-6 max-w-lg mx-auto px-4">
+      <svg class="mx-auto hover:rotate-12 ease-in-out duration-300" xmlns="http://www.w3.org/2000/svg" width="64" height="64"
+        viewBox="0 0 128 128">
+        <path fill="#757f3e"
+          d="M24 29.48L13.08 54.15l.91 29.83s6.07 19.56 6.37 19.77c.3.2 1.31-.25 3.74-4.6s8.6-13.05 9.1-15.17c.51-2.12.71-17.39.71-17.39l1.42-32.87z" />
+        <path fill="#94a61d"
+          d="M24.03 30.48S4.09 49.65 4.08 68.11c0 12.85 6.27 19.92 7.79 22.45s5.06 7.99 5.87 9.1s1.79 3.21 2.49 4.02c.71.81-.07-5.34-.88-7.86c-.81-2.53-3.02-16.26-3.03-25.28c-.01-9.88.83-21.85 4.28-29.1c3.81-8 7.39-11.78 7.39-11.78z" />
+        <path fill="#fcc219"
+          d="M30.68 33.02s-5.87 2.93-6.07 6.47s1.62 7.18 2.33 12.03s.71 11.02.81 12.84C27.84 66.19 33 78.53 33 78.53l32.06 28.72l40.15 1.21s12.64.71 14.26-1.21s4.68-6.23 5.06-9.1c.71-5.36-1.21-8.19-2.63-16.79c-.6-3.66-.81-17.98-6.27-29.43c-6.17-12.94-18.41-24.27-43.18-27.51c-18.01-2.35-27.1 1.42-29.73 1.01c-2.63-.4-4.75-1.62-7.79-.2c-3.89 1.81-4.25 7.79-4.25 7.79"
+          stroke="#f7932a" stroke-width="2" />
+        <path fill="#ffebc9"
+          d="M110.77 112.2c4.77.16 7.28-2.53 8.29-3.64s3.04-4.93 3.04-4.93s-3.45 2.91-7.39 2.7c-3.94-.2-9.2-1.21-12.34-1.52s-13.05 1.92-25.08-.71s-25.31-9.28-34.08-17.9c-11.83-11.63-15.6-24.64-15.6-24.64s-.58 16.14 10.75 30.91s22.86 20.02 37.01 21.54c16 1.71 24.98-1.92 27.3-2.02c2.34-.09 5.17.11 8.1.21"
+          stroke="#f7932a" stroke-width="2" />
+        <path fill="#ffebc9"
+          d="M53.03 35.34c-.3 3.14 1.62 5.46 3.94 5.87c2.5.43 6.27-.2 11.83 2.93c5.56 3.14 13.37 10.96 18 6.78c4.25-3.84-2.63-10.92-5.06-13.05c-2.43-2.12-8.49-7.58-19.92-7.79c-6.57-.11-8.59 3.14-8.79 5.26"
+          stroke="#757f3e" stroke-width="2" />
+        <path fill="#ffebc9"
+          d="M20.36 17.34c-.02-.75-.71-4.95-2.72-3.98c-3.47 1.66-4.78 4.1-3.65 6.92c1.42 3.54 3.8 5.84 6.37 8.49c1.97 2.04 5.87 6.17 7.28 7.38c1.42 1.21 3.51 2.86 5.97-.3c2.62-3.37.85-3.98-1.38-6.11S29 26.9 24.71 22.5c-2.15-2.21-4.33-4.41-4.35-5.16"
+          stroke="#757f3e" stroke-width="2" />
+      </svg>
+    <h1 class="text-3xl text-center font-bold text-transparent bg-clip-text bg-gradient-to-br from-emerald-800 via-green-700 to-lime-500">
+      Fresh-squeezed invoices, <br> straight to your door.
+    </h1>
+  </div>
+  <div class="text-center w-full mx-auto mt-8 px-4">
+    <div class="flex gap-4 justify-center text-lg my-8">
+      <button @click="startWorking()"
+        class="px-4 md:px-8 py-2 bg-lime-200 text-lime-800 font-medium rounded-lg border border-transparent hover:border-lime-500 transition-colors">
+        Start Fresh <span class="text-xl">🍋</span>
+      </button>
+      <button @click="loadDemo(200, 800)"
+        class="px-6 py-2 border border-lime-500/30 text-lime-800 font-medium rounded-lg hover:border-lime-500 transition-colors">
+        Try a sample <span class="text-xl">🧃</span>
+      </button>
+    </div>
+
+    <div class="example-prompts | mt-12">
+      <div class="text-center text-sm font-medium text-lime-800/60 cursor-default">
+        Try a prompt below
+      </div>
+      <div class="flex flex-col md:flex md:flex-row justify-center mt-4">
+        <button @click="handleChatInput('A simple invoice for 3 hours of web development at $95/hr')"
+          class="px-2 lg:px-4 py-1 border border-transparent text-lime-800 font-medium rounded-lg hover:bg-lime-400/10 transition-colors">
+          A simple invoice
+        </button>
+        <button @click="handleChatInput('Create an invoice for catering and party planning services for a 40-person event. Include food, decorations, and staffing.')"
+          class="px-2 lg:px-4 py-1 border border-transparent text-lime-800 font-medium rounded-lg hover:bg-lime-400/10 transition-colors">
+          Party planning
+        </button>
+        <button @click="handleChatInput('Create an invoice for a photography session including 2 hours of shooting time, digital photo editing, and print package with 20 photos')"
+          class="px-2 lg:px-4 py-1 border border-transparent text-lime-800 font-medium rounded-lg hover:bg-lime-400/10 transition-colors">
+          Photography session
+        </button>
+        <button @click="handleChatInput('A dozen crates of organic lemons with 4% tax. Make up the rest for an order for Willy Wonka. Make it super crazy and fun and a crazy big order.')"
+          class="px-2 lg:px-4 py-1 border border-transparent text-lime-800 font-medium rounded-lg hover:bg-lime-400/10 transition-colors">
+          Willy Wonka Lemons 🍋
+        </button>
+      </div>
+    </div>  
+
+    <div id="chat-input"
+      class="w-full md:w-2/3 mx-auto md:col-span-12 flex flex-1 flex-col gap-2 p-2 bg-lime-50 rounded-lg mt-4 mb-8 border border-lime-300">
+      <div class="chat-bar z-10">
+        <div class="flex gap-2 relative" x-on:dragover.prevent="dragActive = true; dragFileType = getDragFileType($event)"
+          x-on:dragleave.prevent="dragActive = false" x-on:drop.prevent="handleFileDrop($event)"
+          x-data="{ 
+            dragActive: false,
+            dragFileType: '',
+            getDragFileType(e) {
+              const file = e?.dataTransfer?.items?.[0];
+              if (!file) return '';
+              const type = file.type;
+              if (type.includes('image')) return 'image';
+              if (type.includes('pdf')) return 'PDF';
+              if (type.includes('wordprocessing')) return 'document';
+              return type ? 'unsupported file' : '';
+            }
+          }">
+          <div x-show="dragActive" 
+               x-transition
+               class="absolute inset-0 bg-lime-100/90 rounded-lg flex items-center justify-center z-20">
+            <p class="text-lime-800 text-lg font-medium">
+              <span x-show="dragFileType === 'unsupported file'">
+                File type not supported
+              </span>
+              <span x-show="dragFileType && dragFileType !== 'unsupported file'" x-text="'Drop ' + dragFileType + ' here'">
+              </span>
+            </p>
+          </div>
+          
+          <input type="file" id="file-upload" class="hidden" accept=".pdf,.docx,.txt,.png,.jpg,.jpeg,.webp"
+            @change="handleFileSelect($event)">
+          <label for="file-upload"
+            class="flex items-center px-3 py-2 bg-lime-200 hover:bg-lime-300 rounded cursor-pointer text-lime-700 ease-in-out duration-300"
+            title="Upload file">
+            <!-- Upload icon (shown when not uploading) -->
+            <svg x-show="!isUploading" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            <!-- Spinner (shown when uploading) -->
+            <svg x-show="isUploading" class="animate-spin" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+            </svg>
+          </label>
+          <div class="flex flex-col flex-1">
+            <textarea x-model="chatInput" 
+              @keydown.meta.enter.prevent="sendChat()"
+              @keydown.ctrl.enter.prevent="sendChat()"
+              x-autoexpand
+              rows="1"
+              placeholder="Ask for invoice suggestions... or drop a file here"
+              class="w-full border rounded px-2 py-2 focus:outline-lime-600/50 resize-none min-h-[50px]" 
+              :class="{ 'border-lime-300': dragActive }"></textarea>
+          </div>
+          <button @click="sendChat" :disabled="isLoading"
+            class="text-lime-700 rounded hover:text-lime-600 disabled:opacity-50">
+            <span x-show="!isLoading">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                  <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0m12-3l-6 6" />
+                  <path d="M15 15V9H9" />
+                </g>
+              </svg>
+            </span>
+            <span x-show="isLoading">
+              <svg class="animate-spin" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div x-show="fileContext" class="text-sm text-gray-600 flex items-center gap-2 mt-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2">
+            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+            <polyline points="13 2 13 9 20 9"></polyline>
+          </svg>
+          <span x-text="fileContext?.filename"></span>
+          <button @click="fileContext = null" class="text-gray-500 hover:text-gray-700" title="Remove file">×</button>
+        </div>
+      </div>
+
+      <div x-show="chatHistory.length > 0" class="relative">
+        <div x-show="isChatHistoryVisible" x-transition:enter="transition-all duration-300 ease-out"
+          x-transition:enter-start="transform translate-y-[-2rem] opacity-0 h-0"
+          x-transition:enter-end="transform translate-y-0 opacity-100 h-[300px]"
+          x-transition:leave="transition-all duration-300 ease-in"
+          x-transition:leave-start="transform translate-y-0 opacity-100 h-[300px]"
+          x-transition:leave-end="transform translate-y-[-2rem] opacity-0 h-0" x-cloak id="chat-history"
+          class="space-y-2 px-4 py-2 bg-white/90 border-gray-200 rounded-lg overflow-y-auto origin-top">
+          <template x-for="(entry, index) in chatHistory" :key="index">
+            <div :class="entry.role === 'user' ? 'text-right [&:first-of-type]:!mt-0' : 'text-left'" x-show="entry.mounted"
+              x-init="setTimeout(() => entry.mounted = true, 50)" x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0 transform translate-y-4"
+              x-transition:enter-end="opacity-100 transform translate-y-0" :style="{ 
+                                'transition-delay': index * 100 + 'ms'
+                              }">
+              <div :class="entry.role === 'user' ? 'bg-lime-100 ml-auto' : 'bg-white mr-auto'"
+                class="inline-block rounded px-4 py-2 max-w-[80%]">
+                <p x-text="entry.content"></p>
+                <template x-if="entry.filename">
+                  <div class="text-xs text-gray-600 mt-1 flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2">
+                      <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                      <polyline points="13 2 13 9 20 9"></polyline>
+                    </svg>
+                    <span x-text="entry.filename"></span>
+                  </div>
+                </template>
+                <template x-if="entry.role === 'assistant' && entry.suggestions">
+                  <div>
+                    <p x-text="entry.explanation" class="mb-2"></p>
+                    <pre x-show="entry.suggestions" class="text-xs text-mono mb-2 p-2 bg-gray-50 rounded overflow-x-auto"
+                      x-text="entry.changeSummary"></pre>
+                    <div class="flex gap-2">
+                      <button @click="applyInvoiceSuggestions(entry.suggestions); entry.applied = true"
+                        class="text-sm px-2 py-1 rounded border border-lime-600 hover:bg-lime-100 text-lime-700 hover:text-lime-700">
+                        Create Invoice
+                      </button>
+                      <span x-show="entry.applied" x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0 transform -translate-x-2"
+                        x-transition:enter-end="opacity-100 transform translate-x-0"
+                        class="text-sm text-lime-600 py-1 border border-transparent">
+                        Created ✓
+                      </span>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+
+    <div id="menu-invoices" class="mt-12" x-show="savedInvoices.length > 0"
+        x-transition:enter="transition ease-out duration-500"
+        x-transition:enter-start="opacity-0 transform translate-y-8"
+      >
+      <div class="text-center mb-6 text-sm font-medium text-lime-800/60 cursor-default">
+        Load a saved invoice
+      </div>
+      <div class="relative flex-grow max-w-lg mx-auto">
+        <select name="saved-invoices" @change="loadInvoice($event.target.value && JSON.parse($event.target.value))"
+          class="w-full h-11 px-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-lime-800 appearance-none">
+          <option value="">Select a saved invoice...</option>
+          <template x-for="inv in savedInvoices" :key="inv.id">
+            <option :value="JSON.stringify({...inv})"
+              x-text="inv.number + ' - ' + (inv.customerName.slice(0,30) + (inv.customerName.length > 30 ? '...' : '')) + ' (' + new Date(inv.savedAt).toLocaleDateString() + ')'">
+            </option>
+          </template>
+          </template>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pr-3 text-gray-700">
+          <svg class="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

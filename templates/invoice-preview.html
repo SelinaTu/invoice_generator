@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{{documentType}} {{invoiceNumber}}</title>
+    <style>
+      body { 
+        font-family: system-ui, -apple-system, sans-serif; 
+        line-height: 1.5; 
+        padding: 2rem; 
+        max-width: 816px; 
+        min-width: 816px;
+        margin: 0 auto;
+        color: #333;
+      }
+      .header-details {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        gap: 0.5rem;
+      }
+      .addresses { 
+        display: flex; 
+        flex-direction: row;
+        gap: 1rem;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 1rem; 
+        flex-shrink: 1;
+      }
+      .meta-details { 
+        color: #666; 
+        margin: 0.5rem 0 2rem 0; 
+        font-size: 0.9rem; 
+      }
+      .invoice-details { 
+        display: grid; 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 1rem; 
+      }
+      .invoice-details div { 
+        text-align: right; 
+      }
+      .items { 
+        width: 100%; 
+        border-collapse: collapse; 
+        margin-top: 0.8rem; 
+        margin-bottom: 0.8rem; 
+      }
+      .items th, .items td { 
+        padding: 0.5rem; 
+        text-align: left; 
+        border-bottom: 1px solid #eee; 
+      }
+      .items th:nth-child(2), .items td:nth-child(2), 
+      .items th:nth-child(3), .items td:nth-child(3) 
+      { 
+        padding-left: 0.2rem; 
+        padding-right: 0.5rem; 
+      }
+      .items th { 
+        color: #666; 
+        font-weight: normal; 
+      }
+      h1 { 
+        font-size: 2rem; 
+        margin-top: 0rem;
+        margin-bottom: 0.8rem; 
+        color: #333;
+      }
+      h3 { 
+        color: #333; 
+        font-weight: normal; 
+        margin-bottom: 0.5rem; 
+        margin-top: 0.5rem;
+      }
+      h4 { 
+        color: #333; 
+        font-size: 0.7rem;
+        font-weight: normal; 
+        margin-bottom: 0rem; 
+        margin-top: 0.25rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05rem;
+      }
+      h4 + p {
+        margin: 0rem;
+      }
+      p {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .payment {
+      }
+      .logo {
+        display: flex;
+        justify-content: flex-start;  /* Align to the left */
+        align-items: flex-start;      /* Align to the top */
+        width: 200px;                 /* Fixed width container */
+      }
+      .logo img {
+        object-fit: contain;
+        object-position: left;        /* Align image content to the left */
+        height: 100px;
+        width: 200px;
+        margin: 0;                    /* Remove any margin */
+      }
+      .bottom {
+        display: flex; 
+        flex-direction: row;
+        gap: 1rem; 
+        align-items: start;
+      }
+      .totals { 
+        margin-left: auto; 
+        min-width: 200px; 
+      }
+      .totals div { 
+        display: flex; 
+        justify-content: space-between; 
+        gap: 1rem;
+        padding: 0.5rem 0; 
+      }
+      .total { 
+        font-weight: bold; 
+      }
+    </style>
+  </head>
+  <body>
+    <div id="invoice-preview" class="invoice">
+      <h1 style="font-size: 3rem; font-weight: bold; color: #333;">
+        {{documentType}}
+      </h1>
+      <div class="header">
+        <div class="addresses">
+          <div class="header-details">
+            {{logoHtml}}
+            <div class="">
+              <h4>Invoice number</h4>
+              <p>{{invoiceNumber}}</p>
+            </div>
+            <div>
+              <h4>Issue date</h4>
+              <p>{{formattedIssueDate}}</p>
+            </div>
+          </div>
+          <div class="issuer">
+            <h3 style="margin-top: 0rem;">Issued by</h3>
+            <p style="white-space: pre-line">{{issuer}}</p>
+          </div>
+          <div class="customer">
+            <h3 style="margin-top: 0rem;">Billed to</h3>
+            <p style="white-space: pre-line">{{customer}}</p>
+          </div>
+        </div>
+      </div>
+
+      <h1 style="font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif; font-size: 2rem; font-weight: bold; color: #333; margin: 2rem 0;">
+        <span>{{formattedTotal}}</span>
+        <span>{{currency}}</span>
+        {{dueDateLine}}
+      </h1>
+
+      {{receiptDetailsHtml}}
+      
+      {{messageHtml}}
+
+      <table class="items">
+        <thead>
+          <tr>
+            <th style="text-align: left; padding-left: 0rem;">Product or service</th>
+            <th>Quantity</th>
+            <th>Unit price</th>
+            <th style="text-align: right; padding-right: 0rem;">Line Total</th>
+            <th style="text-align: right; padding-right: 0rem;">With Tax ({{taxRate}}%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{itemsHtml}}
+        </tbody>
+      </table>
+
+      <div class="bottom">
+        {{qrCodeHtml}}
+
+        <div class="payment">
+          <h3>Payment Instructions</h3>
+          <p style="white-space: pre-line">{{paymentInstructions}}</p>
+          {{paymentLinkHtml}}
+        </div>
+
+        <div class="totals">
+          <div class="total">
+            <span>Subtotal</span>
+            <span>{{formattedSubtotal}} {{currency}}</span>
+          </div>
+          <div class="total">
+            <span>Tax ({{taxRate}}%)</span>
+            <span>{{formattedTaxAmount}} {{currency}}</span>
+          </div>
+          <div class="total">
+            <span>Total</span>
+            <span>{{formattedTotal}} {{currency}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
