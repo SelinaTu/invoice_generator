@@ -291,11 +291,18 @@ export function createAlpineModule({
 
         removeItem(index) {
           if (this.invoice.items.length <= 1) return;
-          const items = [...this.invoice.items];
-          items.splice(index, 1);
+          
+          // Create a new array without the removed item
+          const updatedItems = [...this.invoice.items];
+          updatedItems.splice(index, 1);
+          
+          // Use FULL update type to ensure proper handling
           this.updateInvoice({
-            type: this.invoiceManager.UPDATE_TYPES.ITEMS,
-            payload: items
+            type: this.invoiceManager.UPDATE_TYPES.FULL,
+            payload: {
+              ...this.invoice,
+              items: updatedItems
+            }
           });
         },
 
