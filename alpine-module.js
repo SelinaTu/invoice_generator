@@ -1123,6 +1123,48 @@ export function createAlpineModule({
             // Make sure we animate back in even if there's an error
             await this.animateIn(400);
           }
+        },
+
+        async handleClipboardPaste(event) {
+          // Get clipboard items
+          const items = event.clipboardData?.items;
+          if (!items) return;
+
+          // Look for file items in clipboard
+          for (const item of items) {
+            if (item.kind === 'file') {
+              const file = item.getAsFile();
+              if (!file) continue;
+
+              // Check if file type is supported
+              const isSupported = [
+                'application/pdf',
+                'image/png',
+                'image/jpeg',
+                'image/webp',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+                'text/plain'
+              ].includes(file.type);
+
+              if (!isSupported) {
+                this.showToast('File type not supported', 'error');
+                return;
+              }
+
+              // Process the file
+              this.isUploading = true;
+              try {
+                await this.processFile(file);
+                this.showToast('File uploaded successfully', 'success');
+              } catch (error) {
+                console.error('Error processing pasted file:', error);
+                this.showToast('Error processing file', 'error');
+              } finally {
+                this.isUploading = false;
+              }
+              break; // Only process the first valid file
+            }
+          }
         }
       };
     });

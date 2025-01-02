@@ -69,7 +69,8 @@
     </div>  
 
     <div id="chat-input"
-      class="w-full md:w-2/3 mx-auto md:col-span-12 flex flex-1 flex-col gap-2 p-2 bg-lime-50 rounded-lg mt-4 mb-8 border border-lime-300">
+      class="w-full md:w-2/3 mx-auto md:col-span-12 flex flex-1 flex-col gap-2 p-2 bg-lime-50 rounded-lg mt-4 mb-8 border border-lime-300"
+      @paste.window="handleClipboardPaste($event)">
       <div class="chat-bar z-10">
         <div class="flex gap-2 relative" x-on:dragover.prevent="dragActive = true; dragFileType = getDragFileType($event)"
           x-on:dragleave.prevent="dragActive = false" x-on:drop.prevent="handleFileDrop($event)"
@@ -235,5 +236,11 @@
       </div>
     </div>
 
+    <div class="mt-12">
+      <a href="https://groq.com" target="_blank" rel="noopener noreferrer">
+        <img class="mx-auto" width="100" src="https://groq.com/wp-content/uploads/2024/03/PBG-mark1-color.svg"
+          alt="Powered by Groq for fast inference." />
+      </a>
+    </div>
   </div>
 </div>
