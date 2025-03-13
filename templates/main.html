@@ -60,11 +60,11 @@
         {{menuTemplate}}
 
         <div id="workspace"
-          class="p-[2px] bg-gradient-to-br from-emerald-100 via-lime-200 to-yellow-200 rounded-lg transition-all duration-500 ease-in-out">
+          class="p-[2px] bg-gradient-to-br from-emerald-100 via-lime-200 to-yellow-200 rounded-lg transition-all duration-500 ease-in-out ">
           <div class="workspace-container | " x-data x-show="$store.workspace.show" x-init="$store.workspace.show = true">
         
             <!-- Workspace Canvas -->
-            <div class="workspace-canvas" x-show="!$store.workspace.isNewPage">
+            <div class="workspace-canvas | min-h-[110vh]" x-show="!$store.workspace.isNewPage">
               <!-- Workspace controls -->
               <!-- notes: sticky control is kind of annoying here, but backdrop blur looks good, but messes up w/ repainting -->
               <div class="workspace-panel" x-show="$store.workspace.show" 
@@ -348,7 +348,7 @@
                     <div class="md:col-span-3">
                       <label class="block text-sm font-medium mb-2 text-gray-800">Date</label>
                       <input type="date" x-model="invoice.date" @change="handleFieldUpdate('date', $event.target.value)"
-                        class="border rounded w-full px-2 py-2">
+                        class="border rounded w-full px-2 py-2 h-[42px]">
                     </div>
                     <div class="md:col-span-3">
                       <label class="block text-sm font-medium mb-2 text-gray-800">Currency</label>
@@ -438,7 +438,7 @@
                 <template x-if="invoice.mode === 'receipt'">
                   <div id="receipt-details" class="mt-6">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 space-y-6 md:space-y-2">
-                      <div>
+                      <div class="mt-2">
                         <label class="block text-sm font-medium text-gray-800 mb-2">Payment Date</label>
                         <input type="date" x-model="invoice.receipt.paymentDate"
                           @change="handleReceiptUpdate('paymentDate', $event.target.value)"
@@ -558,7 +558,7 @@ If you have any questions about this invoice, please don't hesitate to reach out
                   <div class="products-wrapper overflow-x-scroll">
                     <div class="products-container space-y-2 | min-w-[800px] px-[2px]">
                       <!-- Column Headers -->
-                      <div class="grid grid-cols-[8fr_1fr_2fr_2fr_2fr_1fr] gap-2 mb-2">
+                      <div class="grid grid-cols-[7fr_2fr_2fr_2fr_2fr_1fr] gap-2 mb-2">
                         <div class="">
                           <label class="text-sm font-medium text-gray-800">Product or service</label>
                         </div>
@@ -582,14 +582,14 @@ If you have any questions about this invoice, please don't hesitate to reach out
         
                       <!-- Items Template -->
                       <template x-for="(item, index) in invoice.items" :key="index">
-                        <div class="grid grid-cols-[8fr_1fr_2fr_2fr_2fr_1fr] gap-4 items-center">
-                          <div class="item-description pt-1 px-[2px]">
+                        <div class="grid grid-cols-[7fr_2fr_2fr_2fr_2fr_1fr] gap-4 ">
+                          <div class="item-description ">
                             <textarea x-autoexpand 
                                       x-model="item.description" 
                                       @input="$el.style.height = ''; $el.style.height = $el.scrollHeight + 'px'"
                                       placeholder="Product or service" 
                                       rows="1"
-                                      class="border rounded w-full px-2 py-2 min-h-[50px]"></textarea>
+                                      class="border rounded w-full px-2 py-1 pt-2 min-h-[42px]"></textarea>
                           </div>
                           <div class="item-quantity">
                             <input type="number" x-model="item.quantity" @change="handleItemUpdate(index, item)"
@@ -706,10 +706,10 @@ PayPal/Wise/etc: your@email.com"></textarea>
                   <!-- Payment Method -->
                   <div class="">
                     <label for="payment-terms" class="block text-sm font-medium text-gray-600 mb-2">Payment Terms</label>
-                    <div class="flex items-center gap-4">
+                    <div class="flex md:flex-row flex-col md:items-center gap-4">
                       <div class="flex-grow relative">
                         <select id="payment-terms" x-model="invoice.paymentTerms" @change="handleFieldUpdate('paymentTerms', $event.target.value)"
-                          class="w-full py-2 px-2 bg-white border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-lime-500 appearance-none">
+                          class="w-full py-2 px-2 bg-white border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-lime-500 appearance-none min-w-[200px]">
                           <option value="30days">Within 30 days</option>
                           <option value="15days">Within 15 days</option>
                           <option value="specific">Specific date</option>

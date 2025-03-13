@@ -335,6 +335,7 @@ export function createAlpineModule({
 
           await this.animateOut(outMs);
           Alpine.store('workspace').isNewPage = false;
+          await new Promise(resolve => setTimeout(resolve, 200));
           await this.animateIn(inMs);
         },
 
@@ -508,16 +509,28 @@ export function createAlpineModule({
             // Convert logo to base64 if it exists
             if (this.invoice.logoUrl) {
               try {
+                console.log('fetching logo for PDF:', this.invoice.logoUrl);
                 const logoImg = container.querySelector('.logo img');
                 if (logoImg) {
-                  const response = await fetch(this.invoice.logoUrl);
-                  const blob = await response.blob();
-                  const base64 = await new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => resolve(reader.result);
-                    reader.readAsDataURL(blob);
+                  // Use the proxy endpoint instead of direct fetch
+                  const response = await fetch('/proxy-image', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: this.invoice.logoUrl })
                   });
-                  logoImg.src = base64;
+                  
+                  if (!response.ok) {
+                    console.warn('Failed to fetch logo:', response);
+                    return;
+                  }
+                  
+                  const data = await response.json();
+                  if (data.error) {
+                    console.warn('Failed to proxy logo:', data.error);
+                    return;
+                  }
+                  
+                  logoImg.src = data.base64;
                 }
               } catch (error) {
                 console.warn('Failed to convert logo to base64:', error);
@@ -1078,6 +1091,7 @@ export function createAlpineModule({
         async startWorking() {
           await this.animateOut(200);
           Alpine.store('workspace').isNewPage = false;
+          await new Promise(resolve => setTimeout(resolve, 200));
           await this.animateIn(400);
         },
 

@@ -33,13 +33,13 @@
     </h1>
   </div>
   <div class="text-center w-full mx-auto mt-8 px-4">
-    <div class="flex gap-4 justify-center text-lg my-8">
+    <div class="md:flex gap-4 justify-center text-lg my-8">
       <button @click="startWorking()"
-        class="px-4 md:px-8 py-2 bg-lime-200 text-lime-800 font-medium rounded-lg border border-transparent hover:border-lime-500 transition-colors">
+        class="block mx-auto mb-4 | md:mx-0 md:mb-0 px-4 md:px-8 py-2 bg-lime-200 text-lime-800 font-medium rounded-lg border border-transparent hover:border-lime-500 transition-colors">
         Start Fresh <span class="text-xl">🍋</span>
       </button>
       <button @click="loadDemo(200, 800)"
-        class="px-6 py-2 border border-lime-500/30 text-lime-800 font-medium rounded-lg hover:border-lime-500 transition-colors">
+        class="block mx-auto | md:mx-0 px-6 py-2 border border-lime-500/30 text-lime-800 font-medium rounded-lg hover:border-lime-500 transition-colors">
         Try a sample <span class="text-xl">🧃</span>
       </button>
     </div>
@@ -124,7 +124,7 @@
               x-autoexpand
               rows="1"
               placeholder="Ask for invoice suggestions... or drop a file here"
-              class="w-full border rounded px-2 py-2 focus:outline-lime-600/50 resize-none min-h-[50px]" 
+              class="w-full border rounded px-2 py-2 focus:outline-lime-600/50 resize-none min-h-[100px] md:min-h-[50px]" 
               :class="{ 'border-lime-300': dragActive }"></textarea>
           </div>
           <button @click="sendChat" :disabled="isLoading"
@@ -236,7 +236,7 @@
       </div>
     </div>
 
-    <div class="mt-12">
+    <div class="mt-12 mb-12">
       <a href="https://groq.com" target="_blank" rel="noopener noreferrer">
         <img class="mx-auto" width="100" src="https://groq.com/wp-content/uploads/2024/03/PBG-mark1-color.svg"
           alt="Powered by Groq for fast inference." />

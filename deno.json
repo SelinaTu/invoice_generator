@@ -2,12 +2,14 @@
   "name": "freshinvoice",
   "description": "A powerful tool for creating and managing invoices effortlessly.",
   "tasks": {
-    "play": "deno run --allow-read --allow-env --allow-write --allow-net ./main.js",
-    "merge1": "deno run --allow-read --allow-write --allow-env ../../_dev/merge_files_1.ts",
-    "merge": "deno run --allow-read --allow-write --allow-env ./merge_files.ts",
-    "reload": "deno run --watch --allow-read --allow-env --allow-write --allow-net ./main.js",
-    "serve": "deno serve --watch --allow-ffi --allow-read --allow-env --allow-write --allow-net ./main.js",
-    "test": "deno run --allow-read --allow-env --allow-write --allow-net ./test.js"
+    "play": "deno run --allow-read --allow-env --allow-write --allow-net --allow-import ./main.js",
+    "merge1": "deno run --allow-read --allow-write --allow-env --allow-import ../../_dev/merge_files_1.ts",
+    "merge": "deno run --allow-read --allow-write --allow-env --allow-import ./merge_files.ts",
+    "reload": "deno run --watch --allow-read --allow-env --allow-write --allow-net --allow-import ./main.js",
+    "serve": "deno serve --watch --allow-ffi --allow-read --allow-env --allow-write --allow-net --allow-import ./main.js",
+    "test": "deno run --allow-read --allow-env --allow-write --allow-net ./test.js",
+    "commit": "git add . -A && git commit -m 'auto' && git push origin main",
+    "prod": "deployctl deploy --prod"
   },
   "exports": "./main.js",
   "deploy": {

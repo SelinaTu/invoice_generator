@@ -1,7 +1,7 @@
 import { Hono } from "https://deno.land/x/hono@v3.11.7/mod.ts";
 import "jsr:@std/dotenv/load";
 import { generateInvoicePreviewHtml, getAlpineModule } from "./alpine-module.js";
-import { generateQrCode, chatMiddleware, processFile } from "./server-helpers.js";
+import { generateQrCode, chatMiddleware, processFile, proxyImage } from "./server-helpers.js";
 
 const mainTemplate = await Deno.readTextFile(new URL('./templates/main.html', import.meta.url));
 const menuTemplate = await Deno.readTextFile(new URL('./templates/menu.html', import.meta.url));
@@ -14,6 +14,7 @@ const app = new Hono();
 app.post("/generate-qr", generateQrCode);
 app.post("/chat", chatMiddleware);
 app.post("/process-file", processFile);
+app.post("/proxy-image", proxyImage);
 
 export const getMainHtml = async () => {
   // Get the Alpine module content
@@ -26,8 +27,10 @@ export const getMainHtml = async () => {
     .replace('{{toastsTemplate}}', toastsTemplate)
     .replace('{{alpineModule}}', alpineModule)
 };
-
-app.get("/", async (c) => c.html(await getMainHtml()));
+app.get("/", async (c) => {
+  const html = await getMainHtml();
+  return c.html(html);
+});
 
 app.post("/preview", async (c) => {
   const data = await c.req.json();

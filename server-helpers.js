@@ -45,7 +45,7 @@ Guidelines for generating suggestions:
    - "RCP-" for receipts
 7. Items should include clear, detailed descriptions with specific quantity and price
 8. Logo URL and payment link should be valid URLs or empty strings
-9. If you're suggesting a logo URL, prefer using this service, e.g. https://placecats.com/200x100 unless otherwise specified
+9. If you're suggesting a logo URL, prefer using this service, e.g. https://placecats.com/millie/200/100 unless an image is specified. Does not take params or text.
 
 Receipt-specific guidelines:
 1. When in receipt mode:
@@ -421,6 +421,35 @@ export const processFile = async (c) => {
     });
   } catch (error) {
     console.error("File processing error:", error);
+    return c.json({ error: error.message }, 500);
+  }
+};
+
+// Add this new endpoint handler
+export const proxyImage = async (c) => {
+  try {
+    const { url } = await c.req.json();
+    
+    if (!url) {
+      return c.json({ error: "URL is required" }, 400);
+    }
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      return c.json({ error: "Failed to fetch image" }, response.status);
+    }
+
+    const blob = await response.blob();
+    const buffer = await blob.arrayBuffer();
+    const base64 = btoa(
+      new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
+    );
+
+    return c.json({ 
+      base64: `data:${response.headers.get('content-type') || 'image/jpeg'};base64,${base64}`
+    });
+  } catch (error) {
+    console.error("Image proxy error:", error);
     return c.json({ error: error.message }, 500);
   }
 };
