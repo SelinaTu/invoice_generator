@@ -1,4 +1,4 @@
-const invoicePreviewTemplate = await Deno.readTextFile(new URL('./templates/invoice-preview.html', import.meta.url));
+const invoicePreviewTemplate = await Deno.readTextFile(new URL('../templates/partials/invoice-preview.html', import.meta.url));
 
 export const formatNumber = (number) => {
   return new Intl.NumberFormat('en-US', {
